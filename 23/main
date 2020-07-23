@@ -1,0 +1,43 @@
+
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/**
+ *
+ * @author TISD
+ */
+public class Main {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        Management management = new Management();
+        List<Fruit> listFruits = new ArrayList<>();
+        Hashtable<String, List<Order>> hashTableOrder = new Hashtable<>();
+        while (true) {
+            int choice = management.getMenuChoice();
+            switch (choice) {
+                case 1:
+                    management.addFruit(listFruits);
+                    break;
+                case 2:
+                    management.viewOrder(hashTableOrder);
+                    break;
+                case 3:
+                    management.shopping(listFruits, hashTableOrder);
+                    break;
+                case 4:
+                    return;
+            }
+        }
+    }
+
+}
