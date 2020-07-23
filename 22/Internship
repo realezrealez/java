@@ -1,0 +1,65 @@
+
+import java.util.List;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/**
+ *
+ * @author TISD
+ */
+public class Internship extends Candidate {
+
+    private String majors, semester, universityName;
+
+    public Internship(String majors, String semester, String universityName, int ID, String firstName, String lastName, int birthDate, String address, String phone, String email, int type) {
+        super(ID, firstName, lastName, birthDate, address, phone, email, type);
+        this.majors = majors;
+        this.semester = semester;
+        this.universityName = universityName;
+    }
+
+    public Internship() {
+    }
+
+    @Override
+    public void createCandidate(List<Candidate> listCandidate) {
+        super.createCandidate(listCandidate); //To change body of generated methods, choose Tools | Templates.
+        this.type = 2;
+        majors = requirement.getInputString("Enter majors: ");
+        semester = requirement.getInputString("Enter semester: ");
+        universityName = requirement.getInputString("Enter university name: ");
+    }
+
+    public String getMajors() {
+        return majors;
+    }
+
+    public void setMajors(String majors) {
+        this.majors = majors;
+    }
+
+    public String getSemester() {
+        return semester;
+    }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
+    }
+
+    public String getUniversityName() {
+        return universityName;
+    }
+
+    public void setUniversityName(String universityName) {
+        this.universityName = universityName;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+}
