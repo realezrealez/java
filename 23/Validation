@@ -1,0 +1,115 @@
+
+import java.util.List;
+import java.util.Scanner;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/**
+ *
+ * @author TISD
+ */
+public class Requirement {
+
+    private Scanner scanner = new Scanner(System.in);
+
+    public int getInputInteger(String mess, int min, int max) {
+        while (true) {
+            System.out.print(mess);
+            String input = scanner.nextLine();
+            try {
+                int number = Integer.parseInt(input);
+                if (number < min || number > max) {
+                    System.out.println("Please enter a number between " + min + " and " + max);
+                    continue;
+                } else {
+                    return number;
+                }
+            } catch (Exception e) {
+                System.out.println("Please enter a number");
+            }
+        }
+    }
+
+    public double getInputDouble(String mess) {
+        while (true) {
+            System.out.print(mess);
+            String input = scanner.nextLine();
+            try {
+                double number = Double.parseDouble(input);
+                return number;
+            } catch (Exception e) {
+                System.out.println("Please enter a number");
+            }
+        }
+    }
+
+    public String getInputString(String mess) {
+        while (true) {
+            System.out.print(mess);
+            String input = scanner.nextLine();
+            if (input.isEmpty()) {
+                System.out.println("Please enter some character");
+            } else {
+                return input;
+            }
+        }
+    }
+
+    public boolean checkExistFruit(List<Fruit> listFruits, int newID) {
+        for (Fruit fruit : listFruits) {
+            if (fruit.getId() == newID) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkYN(String mess) {
+        while (true) {
+            System.out.print(mess);
+            String input = scanner.nextLine();
+            if (input.isEmpty()) {
+                System.out.println("Please enter character");
+            } else if (input.length() == 1) {
+                if (input.charAt(0) == 'Y' || input.charAt(0) == 'y') {
+                    return true;
+                } else if (input.charAt(0) == 'N' || input.charAt(0) == 'n') {
+                    return false;
+                } else {
+                    System.out.println("Accept Y or N character only");
+                }
+            } else {
+                System.out.println("Please enter only a character");
+            }
+        }
+    }
+
+    public boolean checkQuantityFruit(int fruitQuantity, int quantity) {
+        if (fruitQuantity < quantity) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean checkExistItem(List<Order> listOrders, int fruitID) {
+        for (Order order : listOrders) {
+            if (order.getId() == fruitID) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean checkContainFruit(Fruit fruit){
+        if (fruit.getQuantity() == 0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+}
