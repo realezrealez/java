@@ -1,0 +1,67 @@
+
+import java.util.List;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/**
+ *
+ * @author TISD
+ */
+public class Fresher extends Candidate {
+
+    private String graduatedTime;
+    private String graduatedRank;
+    private String education;
+
+    public Fresher(String graduatedTime, String graduatedRank, String education, int ID, String firstName, String lastName, int birthDate, String address, String phone, String email, int type) {
+        super(ID, firstName, lastName, birthDate, address, phone, email, type);
+        this.graduatedTime = graduatedTime;
+        this.graduatedRank = graduatedRank;
+        this.education = education;
+    }
+
+    public Fresher() {
+    }
+
+    @Override
+    public void createCandidate(List<Candidate> listCandidate) {
+        super.createCandidate(listCandidate); //To change body of generated methods, choose Tools | Templates.
+        this.type = 1;
+        graduatedTime = requirement.getInputString("Enter graduated time: ");
+        graduatedRank = requirement.getRank("Enter graduated rank: ");
+        education = requirement.getInputString("Enter education: ");
+    }
+
+    public String getGraduatedTime() {
+        return graduatedTime;
+    }
+
+    public void setGraduatedTime(String graduatedTime) {
+        this.graduatedTime = graduatedTime;
+    }
+
+    public String getGraduatedRank() {
+        return graduatedRank;
+    }
+
+    public void setGraduatedRank(String graduatedRank) {
+        this.graduatedRank = graduatedRank;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+}
