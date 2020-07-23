@@ -1,0 +1,100 @@
+
+import java.util.List;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/**
+ *
+ * @author TISD
+ */
+public class Management {
+
+    Requirements requirement = new Requirements();
+
+    public void addExperience(List<Candidate> listCandidate) {
+        while (true) {
+            Experience newExperience = new Experience();
+            newExperience.createCandidate(listCandidate);
+            listCandidate.add(newExperience);
+            System.out.print("Do you want to continue (Y/N): ");
+            if (!requirement.checkYN()) {
+                break;
+            }
+        }
+    }
+
+    public void addFresher(List<Candidate> listCandidate) {
+        while (true) {
+            Fresher newFresher = new Fresher();
+            newFresher.createCandidate(listCandidate);
+            listCandidate.add(newFresher);
+            System.out.print("Do you want to continue (Y/N): ");
+            if (!requirement.checkYN()) {
+                break;
+            }
+        }
+    }
+
+    public void addIntern(List<Candidate> listCandidate) {
+        while (true) {
+            Internship newInternship = new Internship();
+            newInternship.createCandidate(listCandidate);
+            listCandidate.add(newInternship);
+            System.out.print("Do you want to continue (Y/N): ");
+            if (!requirement.checkYN()) {
+                break;
+            }
+        }
+    }
+
+    public boolean isExist(List<Candidate> listCandidates, int type, String search) {
+        for (Candidate candidate : listCandidates) {
+            if (candidate.getType() == type) {
+                String fullName = candidate.getFirstName() + candidate.getLastName();
+                if (fullName.contains(search)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void search(List<Candidate> listCandidates) {
+        String search = requirement.getInputString("Input Candidate name (First name or Last name): ");
+        int type = requirement.getInputInt("Input type of candidate: ", 0, 2);
+        if (isExist(listCandidates, type, search)) {
+            System.out.println("List of search:");
+            for (Candidate candidate : listCandidates) {
+                if (candidate.getType() == type) {
+                    String fullName = candidate.getFirstName() + " " + candidate.getLastName();
+                    if (fullName.contains(search)) {
+                        System.out.println(fullName);
+                    }
+                }
+            }
+        } else {
+            System.out.println("Cannot found");
+        }
+    }
+
+    public void displayEach(List<Candidate> listCandidates, int type) {
+        for (Candidate candidate : listCandidates) {
+            if (candidate.getType() == type) {
+                System.out.println(candidate);
+            }
+        }
+    }
+
+    public void display(List<Candidate> listCandidates) {
+        System.out.println("List of candidate:");
+        System.out.println("============Experience============");
+        displayEach(listCandidates, 0);
+        System.out.println("============Fresher============");
+        displayEach(listCandidates, 1);
+        System.out.println("============Intern============");
+        displayEach(listCandidates, 2);
+    }
+}
