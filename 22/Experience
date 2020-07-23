@@ -1,0 +1,56 @@
+
+import java.util.List;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/**
+ *
+ * @author TISD
+ */
+public class Experience extends Candidate {
+
+    private int yearOfExperience;
+    private String professionalSkill;
+
+    public Experience() {
+    }
+
+    public Experience(int yearOfExperience, String professionalSkill, int ID, String firstName, String lastName, int birthDate, String address, String phone, String email, int type) {
+        super(ID, firstName, lastName, birthDate, address, phone, email, type);
+        this.yearOfExperience = yearOfExperience;
+        this.professionalSkill = professionalSkill;
+    }
+
+    @Override
+    public void createCandidate(List<Candidate> listCandidate) {
+        super.createCandidate(listCandidate);
+        this.type = 0;
+        yearOfExperience = requirement.getInputInt("Enter year of experience: ", 0, 100);
+        professionalSkill = requirement.getInputString("Enter professional skill: ");
+    }
+
+    public int getYearOfExperience() {
+        return yearOfExperience;
+    }
+
+    public void setYearOfExperience(int yearOfExperience) {
+        this.yearOfExperience = yearOfExperience;
+    }
+
+    public String getProfessionalSkill() {
+        return professionalSkill;
+    }
+
+    public void setProfessionalSkill(String professionalSkill) {
+        this.professionalSkill = professionalSkill;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+}
