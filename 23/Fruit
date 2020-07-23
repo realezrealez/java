@@ -1,0 +1,93 @@
+
+import java.util.List;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/**
+ *
+ * @author TISD
+ */
+public class Fruit {
+
+    private int id;
+    private String name;
+    private double price;
+    private int quantity;
+    private String origin;
+
+    public Fruit() {
+    }
+
+    public Fruit(int id, String name, double price, int quantity, String origin) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.origin = origin;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    @Override
+    public String toString() {
+        return name + "\t" + origin + '\t' + price;
+    }
+
+    public void createFruit(List<Fruit> listFruits) {
+        Requirement requirement = new Requirement();
+        while (true) {
+            id = requirement.getInputInteger("Enter fruit id: ", 0, Integer.MAX_VALUE);
+            if (!requirement.checkExistFruit(listFruits, id)) {
+                break;
+            } else {
+                System.out.println(id + " has been exist. Please enter other id");
+            }
+        }
+        name = requirement.getInputString("Enter fruit name: ");
+        price = requirement.getInputDouble("Enter fruit price: ");
+        quantity = requirement.getInputInteger("Enter quantity: ", 1, Integer.MAX_VALUE);
+        origin = requirement.getInputString("Enter origin of fruit: ");
+    }
+
+}
