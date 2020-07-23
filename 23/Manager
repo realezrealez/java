@@ -1,0 +1,120 @@
+
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/**
+ *
+ * @author TISD
+ */
+public class Management {
+
+    Requirement requirement = new Requirement();
+
+    public void addFruit(List<Fruit> listFruits) {
+        while (true) {
+            Fruit newFruit = new Fruit();
+            newFruit.createFruit(listFruits);
+            listFruits.add(newFruit);
+            if (!requirement.checkYN("Do you want to continue? (Y/N) ")) {
+                break;
+            }
+        }
+    }
+
+    public void displayFruit(List<Fruit> listFruits) {
+        int count = 0;
+        System.out.println("| ++ Item ++ | ++ Fruit Name ++ | ++ Origin ++ | ++ Price ++ |");
+        for (Fruit fruit : listFruits) {
+            System.out.println(++count + "\t" + fruit.getName() + "\t" + fruit.getOrigin() + "\t" + fruit.getPrice() + "$");
+        }
+    }
+
+    public void viewOrder(Hashtable<String, List<Order>> hashTableOrder) {
+        for (String name : hashTableOrder.keySet()) {
+            System.out.println("Customer: " + name);
+            List<Order> listOrders = hashTableOrder.get(name);
+            displayListOrder(listOrders);
+            System.out.println("");
+        }
+    }
+
+    public void displayListOrder(List<Order> listOrders) {
+        int count = 0;
+        double total = 0;
+        System.out.println("Product | Quantity | Price | Amount");
+        for (Order order : listOrders) {
+            System.out.println(++count + ". " + order.getProduct() + "\t" + order.getQuantity() + "\t" + order.getPrice() + "$\t" + order.getAmount() + "$");
+            total += order.getAmount();
+        }
+        System.out.println("Total: " + total + "$");
+    }
+
+    public void shopping(List<Fruit> listFruits, Hashtable<String, List<Order>> hashtableShopping) {
+
+        if (listFruits.isEmpty()) {
+            System.out.println("No item to selected");
+            return;
+        }
+
+        displayFruit(listFruits);
+        List<Order> listOrders = new ArrayList<>();
+
+        while (true) {
+            int choice = requirement.getInputInteger("Enter your choice fruit: ", 1, listFruits.size());
+            Fruit fruit = listFruits.get(choice - 1);
+
+            System.out.println("You selected: " + fruit.getName());
+            if (!requirement.checkContainFruit(fruit)) {
+                System.out.println(fruit.getName() + " out of hand. Please choose other item");
+                continue;
+            }
+
+            int quantity = 0;
+            while (true) {
+                quantity = requirement.getInputInteger("Please input quantity: ", 1, Integer.MAX_VALUE);
+                if (requirement.checkQuantityFruit(fruit.getQuantity(), quantity)) {
+                    fruit.setQuantity(fruit.getQuantity() - quantity);
+                    break;
+                } else {
+                    System.out.println(fruit.getName() + " contain " + fruit.getQuantity() + " only");
+                }
+            }
+            if (requirement.checkExistItem(listOrders, fruit.getId())) {
+                updateOrder(listOrders, fruit.getId(), quantity);
+            } else {
+                listOrders.add(new Order(fruit.getId(), fruit.getName(), quantity, fruit.getPrice(), fruit.getPrice() * quantity));
+            }
+            if (!requirement.checkYN("Do you want to continue? (Y/N) ")) {
+                break;
+            }
+        }
+        String customerName = requirement.getInputString("Input your name: ");
+        hashtableShopping.put(customerName, listOrders);
+    }
+
+    public void updateOrder(List<Order> listOrders, int id, int quantity) {
+        for (Order order : listOrders) {
+            if (order.getId() == id) {
+                order.setQuantity(order.getQuantity() + quantity);
+                return;
+            }
+        }
+    }
+
+    public int getMenuChoice() {
+        System.out.println("FRUIT SHOP SYSTEM\n"
+                + "1. Create Fruit\n"
+                + "2. View orders\n"
+                + "3. Shopping (for buyer)\n"
+                + "4. Exit");
+        int choice = requirement.getInputInteger("Please choose 1 to create product, 2 to view order, 3 for shopping, 4 to Exit program: ", 1, 4);
+        return choice;
+    }
+
+}
