@@ -1,0 +1,23 @@
+public class Main {
+ public static void menu() {
+        System.out.println("1. Add task");
+        System.out.println("2. Delete task");
+        System.out.println("3. Display task");
+        System.out.println("4. Quit");
+    }
+    public static void main(String[] args) {
+        Manager m = new Manager();
+   
+        while(true) {
+            menu();
+            System.out.print("Your choice: ");
+            int option = Validate.checkInputInt("Enter 1 to 4",1, 4);
+            switch(option) {
+                case 1: m.addTask();break;
+                case 2: m.deleteTask();break;
+                case 3: m.display();break;
+                case 4: System.exit(0);
+            }
+        }
+    }
+    }
