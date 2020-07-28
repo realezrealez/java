@@ -1,0 +1,84 @@
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+/**
+ *
+ * @author ADMIN
+ */
+public class Manager {
+    private List<Task> a;
+   
+
+    public Manager() {
+        a = new ArrayList<>(); 
+    }
+    public void addTask() {
+        int id;
+        if(a.size()==0) id = 1;
+        else id = a.get(a.size()-1).getId()+1;
+        System.out.print("Enter Requirement Name: ");
+        String requirementName = Validate.checkInputString() ;
+        System.out.print("Enter Task Type: ");
+        String taskTypeId = Validate.checkInputTaskTypeId();
+        System.out.print("Enter Date: ");
+        String date = Validate.checkInputDate();
+        System.out.print("Enter From: ");
+        String planFrom = Validate.checkInputPlan();
+        String planTo;
+        while (true) {
+            System.out.print("Enter To: ");
+            planTo = Validate.checkInputPlan();
+            if (Double.parseDouble(planFrom) > Double.parseDouble(planTo)) {
+                System.out.println("From must be smaller than To. Enter again");         
+            }else break;
+        }
+        System.out.print("Enter Assignee: ");
+        String assign = Validate.checkInputString();
+        System.out.print("Enter Reviewer: ");
+        String reviewer = Validate.checkInputString();
+        a.add(new Task(id, taskTypeId, requirementName, date, planFrom, planTo, assign, reviewer));
+        System.out.println("Add Task Success.");
+    }
+
+    public void deleteTask() {
+        if (a.isEmpty()) {
+            System.out.println("not empty");
+        } else {
+                    System.out.println("Enter ID: ");
+        int ID = Validate.checkInputInt("not exit",Integer.MIN_VALUE, Integer.MAX_VALUE);
+        int size = a.size();
+        //point to each expense in list
+        for (int i = 0; i < size; i++) {
+            Task e = a.get(i);
+            //check id of expense equals input id or not
+            if (e.getId() == ID) {
+                a.remove(i);  
+                
+                //resetID
+            for (int j = i; j < a.size(); j++) {
+                Task t = a.get(j);
+                t.setId(a.get(j).getId()-1);
+                }
+                System.out.println("Remove successfully");
+                return;
+            }
+        }
+        System.out.println("ID does not exist");
+        }
+    }
+
+
+
+   public void display() {
+
+        System.out.println(String.format("%-5s%-15s%-15s%-15s%-15s%-15s%-15s\n",
+                "ID", "Name", "Task Type", "Date", "Time", "Assign", "Reviewer"));
+        for (Task task : a) {
+            double time = Double.parseDouble(task.getPlanTo()) - Double.parseDouble(task.getPlanFrom());
+        System.out.println(String.format("%-5s%-15s%-15s%-15s%-15s%-15s%-15s\n",
+                task.getId(),task.getRequirementName(),task.getTaskTypeId(),task.getDate(),time, task.getAssignee(),task.getReviewer()));
+        }
+    }
+}
