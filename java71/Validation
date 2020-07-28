@@ -1,0 +1,99 @@
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Scanner;
+
+
+/**
+ *
+ * @author ADMIN
+ */
+public class Validate {
+    public static final Scanner in = new Scanner(System.in);
+    public static int checkInputInt(String err,int min, int max) {
+        while (true) {
+            try {
+                int n = Integer.parseInt(in.nextLine());
+                if (n < min || n > max) {
+                    System.out.print(err);
+                    continue;
+                }
+                return n;
+            } catch (NumberFormatException ex) {
+                System.err.println("Re-input");
+            }
+        }
+    }
+
+ public static String checkInputDate() {
+        //set format of date
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        dateFormat.setLenient(false); // check ngày
+        //force user input exectly a date
+        while(true) {
+            String input = in.nextLine();
+            try {
+                Date date = dateFormat.parse(input);
+                //get current date
+                Date curDate = Calendar.getInstance().getTime(); // lấy ngày hiện tại
+                //check range of date
+                if (curDate.compareTo(date) < 0) {
+                    System.out.print("Please input date that before current date: ");
+                    continue;
+                }
+                dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+                return dateFormat.format(date);
+            } catch (Exception e) {
+                System.out.print("Please input valid date (dd-MM-yyyy): ");
+            }
+        }
+    }
+
+    public static String checkInputString() {
+        while (true) {
+            String result = in.nextLine().trim();
+            if (result.length() == 0) {
+                System.err.println("Not empty.");
+            } else {
+                return result;
+            }
+        }
+    }
+
+
+    public static String checkInputTaskTypeId() {
+        while (true) {
+            int n = checkInputInt("Must be from 1 to 4\n",1, 4);
+            String result = null;
+            switch (n) {
+                case 1:
+                    result = "code";
+                    break;
+                case 2:
+                    result = "test";
+                    break;
+                case 3:
+                    result = "design";
+                    break;
+                case 4:
+                    result = "review";
+            }
+            return result;
+        }
+    }
+
+    public static String checkInputPlan() {
+        String valid = "^[0-9]{1,2}\\.5|[0-9]{1,2}\\.0$"; // xuất hiện 1  hoặc 2 lần
+        while (true) {
+            String result = checkInputString();
+            if (result.matches(valid) && Double.parseDouble(result) >= 8.0
+                    && Double.parseDouble(result) <= 17.5) {
+                return result;
+            } else {
+                System.err.println("Re-input.");
+            }
+        }
+    }
+}
